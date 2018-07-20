@@ -7,13 +7,15 @@ import Marker from '../Marker';
 import ClusterMarker from '../ClusterMarker';
 
 import mapStyles from './mapStyles.json';
-import { markersData, susolvkaCoords } from '../../fakeData';
 
 import MapWrapper from './MapWrapper';
 
 const MAP = {
   defaultZoom: 8,
-  defaultCenter: susolvkaCoords,
+  defaultCenter: {
+    lat: 53.5532316,
+    lng: 10.0087783
+  },
   options: {
     //styles: mapStyles,
     maxZoom: 19,
