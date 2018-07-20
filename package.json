@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "google-map-react": "0.24.0",
     "immutable": "^3.8.1",
     "points-cluster": "0.1.4",

@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import supercluster from 'points-cluster';
+import axios from 'axios';
 
 import Marker from '../Marker';
 import ClusterMarker from '../ClusterMarker';
@@ -22,6 +23,8 @@ const MAP = {
 export class GoogleMap extends React.PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   state = {
+    taxis: [],
+    coords: [],
     mapOptions: {
       center: MAP.defaultCenter,
       zoom: MAP.defaultZoom,
@@ -29,8 +32,22 @@ export class GoogleMap extends React.PureComponent {
     clusters: [],
   };
 
+  componentDidMount() {
+    axios.get(`http://localhost:5000/mytaxi/vehicles`)
+      .then(res => {
+        console.log(res.data.poiList.length)
+        const taxis = res.data.poiList;
+        
+        let coords = taxis.map(function(taxi) {
+           return {lat: taxi.coordinate.latitude, lng: taxi.coordinate.longitude }
+        });
+        this.setState({ taxis });
+        this.setState({ coords });
+      });
+  }
+
   getClusters = () => {
-    const clusters = supercluster(markersData, {
+    const clusters = supercluster(this.state.coords, {
       minZoom: 0,
       maxZoom: 16,
       radius: 60,
